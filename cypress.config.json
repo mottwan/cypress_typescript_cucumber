@@ -1,0 +1,17 @@
+{
+  "projectId": "gjmhgf",
+  "viewportWidth": 2560,
+  "viewportHeight": 1440,
+  "waitForAnimations": true,
+  "chromeWebSecurity": false,
+  "watchForFileChanges": true,
+  "videoUploadOnPasses": false,
+  "screenshotOnRunFailure": true,
+  "screenshotsFolder": "cypress/reports/assets/screenshots",
+  "videosFolder": "cypress/reports/assets/videos",
+  "defaultCommandTimeout": 6000,
+  "numTestsKeptInMemory": 30,
+  "pageLoadTimeout": 180000,
+  "requestTimeout": 15000,
+  "video": false
+}

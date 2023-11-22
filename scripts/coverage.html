@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Pie Chart</title>
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div style="width: 80%;">
+    <canvas id="myChart"></canvas>
+</div>
+<script>
+    // Sample data for the pie chart
+    const data = {
+        labels: ['All Zephyr tests', 'Current automation phase'],
+        datasets: [{
+            data: [89, 13],
+            backgroundColor: [
+                'coral', 'green'
+            ]
+        }]
+    };
+
+    // Configuration options
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false
+    };
+
+    // Get the canvas element and create the chart
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        options: options,
+        title: `E2E Coverage`
+    });
+</script>
+</body>
+</html>

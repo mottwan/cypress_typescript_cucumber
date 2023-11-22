@@ -1,0 +1,16 @@
+{
+  "reporterEnabled": "mocha-junit-reporter,mochawesome",
+  "mochaJunitReporterReporterOptions": {
+    "mochaFile": "cypress/reports/junit/results-[hash].xml"
+  },
+  "mochawesomeReporterOptions": {
+    "reportDir": "cypress/reports/mochawesome",
+    "screenshotOnRunFailure": true,
+    "overwrite": false,
+    "quiet": true,
+    "html": true,
+    "json": true,
+    "charts": true,
+    "reportTitle": "Test report for EHR service"
+  }
+}

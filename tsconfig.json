@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist",
+    "declaration": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node16",
+    "resolveJsonModule": true,
+    "types": ["cypress-wait-until", "cypress-iframe", "node", "cypress"],
+    "target": "es2019",
+    "sourceMap": true,
+    "lib": ["es2019", "dom", "ESNext"],
+    "noImplicitAny": true,
+    "module": "esnext",
+    "jsx": "react",
+    "allowJs": true,
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true
+  },
+  "include": ["**/*.{js,ts}", "scripts"]
+}

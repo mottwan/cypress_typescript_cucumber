@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "target": "es6",
+        "lib": ["es6", "dom"],
+        "types": ["cypress", "node"],
+        "chromeWebSecurity": false,
+        "watchForFileChanges": true,
+        "platform": "node"
+    },
+    "include": ["**/*.ts"]
+}

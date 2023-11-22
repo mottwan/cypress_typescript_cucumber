@@ -1,0 +1,50 @@
+version: '3.9'
+
+networks:
+  default:
+    name: aws_test
+    attachable: true
+
+services:
+  aws_cli:
+    container_name: aws_cli
+    platform: linux/amd64
+    build:
+      context: ./docker
+      dockerfile: Go.Dockerfile
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION}"
+    command: >
+      bash -x -c '
+      git status; git branch; printenv; git config --global --add safe.directory /app && [[ ! -d "./.aws-sam/build" ]]
+      && make deploy-sqa -e SCHEDULER_STATUS=ENABLED; make fixture && touch ready.txt'
+    volumes:
+      - "./build/aws-communication:/app:rw"
+    networks:
+      default: { }
+
+  cypress:
+    build:
+      context: .
+    container_name: cypress
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION}"
+    command: >
+      bash -x -c "
+      bash scripts/checkReady.sh /build/ready.txt 400;
+      npm run cy:run:aws"
+    volumes:
+      - "./build/aws-communication:/build:rw"
+      - ".:/app"
+    depends_on:
+        - aws_cli
+    networks:
+      default: { }

@@ -1,0 +1,50 @@
+image: cypress/base:18.12.0
+
+stages:
+  - test
+  - deploy
+  - lint
+
+variables:
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
+  CYPRESS_RECORD_KEY: $CYPRESS_RECORD_KEY
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .npm
+    - cache/Cypress
+    - node_modules
+
+prettier_check:
+  stage: lint
+  script:
+    - npx prettier --check "cypress/**/*.{js,ts}"
+  only:
+    changes:
+      - "cypress/**/*.{js,ts,json}"
+
+.test:
+  stage: test
+  script:
+    - apt update -y
+    - apt install procps openssh-client dnsutils iputils-ping telnet net-tools lsof iproute2 -y
+    - chmod 400 $DB_KEY
+    - bash -c "ssh -o ServerAliveInterval=200 -o StrictHostKeyChecking=no -i $DB_KEY -fNg -L 3377:devdb1:3306 proxyuser@example.com"
+    - npm install
+    - npm run cy:run -- --record false --config video=false
+  after_script:
+    - npm run postcy:run
+  artifacts:
+    expire_in: 30 days
+    when: always
+    paths:
+      - cypress/reports
+  allow_failure: true
+
+.deploy:
+  stage: deploy
+  script:
+    - npm install
+    - npm run publish:artifacts

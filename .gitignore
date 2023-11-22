@@ -1,0 +1,10 @@
+/node_modules
+screenshots/
+.DS_Store
+.idea/
+.code/
+reports/
+/cypress/fixtures/patientCookies.json
+./tmp
+./dist
+.env
